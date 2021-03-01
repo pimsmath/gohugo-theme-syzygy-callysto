@@ -1,0 +1,33 @@
+{{ $ := .root }}
+{{ $page := .page }}
+{{ $columns := $page.Params.design.columns | default "2" }}
+{{ if not (modBool $columns 12) }}
+{{ warnf "Number of columns MUST divide 12 for logos" }}
+{{ end }}
+
+{{ if $page.Params.item }}
+
+  {{ $nitems:= len $page.Params.item }}
+  
+  <div class="col-lg-12">
+  {{ range $idx, $st := sort $page.Params.item ".weight" "asc" }}
+    {{ $row_idx := div $idx (int $columns) }}
+    {{ $col_width := div 12 (int $columns) }}
+    {{ if modBool (add $idx (int $columns)) (int $columns) }}
+    <div class="row align-items-center py-4">
+    {{ end }}
+      <div class="col-lg-{{ $col_width }} text-center">
+        <div class="logo-box">
+          <a href="{{ .url }}" target="_blank">
+            <img src="{{ .logo }}" class="wow zoomIn" alt="{{ .alt_text }}">
+          </a>
+        </div>
+      </div>
+    {{ if modBool (add $idx (int $columns)) (add (int $columns) 2) }}
+    </div>
+    {{ end }}
+  {{ end }}
+  </div>
+
+{{ end }}
+

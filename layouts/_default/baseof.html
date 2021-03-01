@@ -2,17 +2,14 @@
 <html>
     {{- partial "head.html" . -}}
     <body>
-      <div class="page-body">
-        {{ block "main" . }}{{ end }}
+      {{- partial "navbar.html" . -}}
+      <header>
+      {{- block "header" . }}{{ end }}
+      </header>
+      <div id="content">
+      {{- block "main" . }}{{- end }}
       </div>
-        {{- partial "navbar.html" . -}}
-        <header>
-        {{- block "header" . }}{{ end }}
-        </header>
-        <div id="content">
-        {{- block "main" . }}{{- end }}
-        </div>
-        {{- partial "footer.html" . -}}
-        {{- partial "script.html" . -}}
+      {{- partial "footer.html" . -}}
+      {{- partial "script.html" . -}}
     </body>
 </html>

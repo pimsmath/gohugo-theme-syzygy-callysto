@@ -2,26 +2,62 @@
   {{- partial "hero" . -}}
 {{ end }}
 {{ define "main" }}
-  {{- partial "partners" . -}}
-  {{- partial "about" . -}}
-  {{- partial "languages" . -}}
-  {{- partial "terms" . -}}
-{{ end }}
-<!DOCTYPE html>
-<html>
-    {{- partial "head.html" . -}}
-    <body>
-      <div class="page-body">
-        {{ block "main" . }}{{ end }}
+  <span class="js-widget-page d-none"></span>
+  {{ $page := "" }}
+  {{ $headless_bundle := "" }}
+
+  {{ if .IsHome }}
+    {{ $page = "/home/index.md" }}
+    {{ $headless_bundle = site.GetPage $page }}
+    {{ if not $headless_bundle }}
+      {{ warnf "Hugo cannot find Widget Page at %s!" $page }}
+    {{ end }}
+  {{ end }}
+
+  {{ range $index, $st := where ( $headless_bundle.Resources.ByType "page" ) ".Params.active" "!=" false }}
+
+  {{ $bg := $st.Params.design.background }}
+  {{ $style := "" }}
+  {{ $style_bg := "" }}
+  {{ if $bg.color }}
+    {{ $style_bg = printf "background-color: %s;" ($bg.color | default "transparent") }}
+  {{ end }}
+
+  {{ $hash_id := replace $st.File.ContentBaseName "index" (path.Base (path.Split .Path).Dir) }}
+  {{ $widget := or $st.Params.widget "blank" }}
+  {{ $widget_path := printf "widgets/%s.html" $widget }}
+  {{ $widget_args := dict "root" $ "page" $st "hash_id" $hash_id }}
+
+  {{ $extra_attributes := "" }}
+  {{ $css_classes := $st.Params.advanced.css_class | default "" }}
+
+  {{ $widget_class := printf "wg-%s" (replace (replace $widget "." "-") "_" "-") }}
+
+  {{ $columns := $st.Params.design.columns | default "2" }}
+
+  <section id="{{ $hash_id }}" class="home-section {{ $widget_class }} {{ if $bg.text_color_light }}dark{{ else if $bg.text_color_light false }}light{{ end }}" {{with $style}}style="{{. | safeCSS}}"{{end}} {{print $extra_attributes | safeHTMLAttr}}>
+    <div class="home-section-bg" {{with $style_bg}}style="{{. | safeCSS}}"{{end}}></div>
+    <div class="container">
+      <div class="row {{ if not $st.Title | or (eq $columns "1") }}justify-content-center{{ end }}">
+        {{ if $st.Title }}
+          {{ if eq $columns "1" }}
+            <div class="section-heading col-12 mb-3 text-center">
+              {{ with $st.Title }}<h1 class="mb-0">{{ . | markdownify | emojify }}</h1>{{ end }}
+              {{ with $st.Params.subtitle }}<p class="mt-1">{{ . | markdownify | emojify }}</p>{{ end }}
+            </div>
+          {{ else }}
+            <div class="section-heading col-12 col-lg-4 mb-3 mb-lg-0 d-flex flex-column align-items-center align-items-lg-start">
+              {{ with $st.Title }}<h1 class="mb-0">{{ . | markdownify | emojify }}</h1>{{ end }}
+              {{ with $st.Params.subtitle }}<p class="mt-1">{{ . | markdownify | emojify }}</p>{{ end }}
+            </div>
+          {{ end }}
+        {{ end }}
+
+        {{ partial $widget_path $widget_args }}
+
       </div>
-        {{- partial "navbar.html" . -}}
-        <header>
-        {{- block "header" . }}{{ end }}
-        </header>
-        <div id="content">
-        {{- block "main" . }}{{- end }}
-        </div>
-        {{- partial "footer.html" . -}}
-        {{- partial "script.html" . -}}
-    </body>
-</html>
+    </div><!-- container -->
+  </section>                              
+  {{ end }}
+
+{{ end }}

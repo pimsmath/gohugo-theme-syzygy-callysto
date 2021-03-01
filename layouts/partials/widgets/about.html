@@ -1,0 +1,29 @@
+{{ $ := .root }}
+{{ $page := .page }}
+{{ $columns := $page.Params.design.columns | default "2" }}
+
+{{ if $page.Params.item }}
+  <div class="col-lg-6 text-center">
+    <div class="list-box">
+      <ul class="fa-ul">
+        {{ range $idx, $key := sort $page.Params.item ".weight" "desc" }}
+          {{ if (modBool $idx 2)}}
+          <li><span class="fa-li"><i class ="fa {{ .fa }}"></i></span>{{ .description | markdownify | emojify }}</li>
+          {{ end }}
+        {{ end }}
+      </ul>
+    </div>
+  </div>
+  <div class="col-lg-6 text-center">
+    <div class="list-box">
+      <ul class="fa-ul">
+        {{ range $idx, $key := sort $page.Params.item ".weight" "desc" }}
+          {{ if not (modBool $idx 2)}}
+          <li><span class="fa-li"><i class ="fa {{ .fa }}"></i></span>{{ .description | markdownify | emojify }}</li>
+          {{ end }}
+        {{ end }}
+      </ul>
+    </div>
+  </div>
+{{ end }}
+
