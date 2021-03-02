@@ -12,7 +12,7 @@
             {{ if not (eq .URL "/") }}
             <li class="nav-item">
               <a class="nav-link js-scroll-trigger" href="{{ .URL | relLangURL }}">
-                {{ .Name | safeHTML }}
+                {{- .Pre -}}{{ .Name | safeHTML }}{{- .Post -}}
               </a>
             </li>
             {{ end }}
@@ -23,3 +23,4 @@
   </div>
 </nav>
 {{ end }}
+Menu: {{ site.Menus.main }}
