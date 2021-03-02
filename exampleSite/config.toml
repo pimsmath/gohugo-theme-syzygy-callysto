@@ -1,0 +1,24 @@
+baseURL = "http://site.example.com/"
+languageCode = "en-us"
+title = "site.example.com"
+theme = ["github.com/pimsmath/gohugo-theme-syzygy-callysto"]
+
+[params]
+  # Link to the login page of the hub
+  hub_url = "/"
+  signin_text = "Sign in with your account"
+  logo = "/images/logo-13.png"
+
+[menu]
+  [[menu.main]]
+    identifier = "about"
+    name = "about"
+    url = "#about"
+    weight = "10"
+
+  [[menu.main]]
+    identifier = "sign-in"
+    name = "sign-in"
+    pre = "<i class='fas fa-sign-in-alt'></i>"
+    url = "/"
+    weight = "100"

@@ -3,19 +3,13 @@
 
 name = "Syzygy Callysto"
 license = "MIT"
-licenselink = "https://github.com/yourname/yourtheme/blob/master/LICENSE"
-description = ""
-homepage = "http://example.com/"
-tags = []
+licenselink = "https://github.com/pimsmath/gohugo-theme-syzygy-callysto/blob/master/LICENSE"
+description = "Single page syzygy/callysto theme"
+homepage = "https://github.com/pimsmath/gohugo-theme-syzygy-callysto/"
+tags = ["syzygy", "callysto", "singlepage", "responsive"]
 features = []
-min_version = "0.41.0"
+min_version = "0.64.0"
 
 [author]
-  name = ""
+  name = "Ian Allison"
   homepage = ""
-
-# If porting an existing theme
-[original]
-  name = ""
-  homepage = ""
-  repo = ""
