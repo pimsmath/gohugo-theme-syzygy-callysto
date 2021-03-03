@@ -37,4 +37,5 @@ theme = ["github.com/pimsmath/gohugo-theme-syzygy-callysto"]
 ```
 
 You should now be able to `hugo serve` the site. See the `exampleSite` directory
-for common config options and content layouts.
+for common config options and content layouts, (don't copy the `theme` line from
+there, it is configured for local development of the theme).
