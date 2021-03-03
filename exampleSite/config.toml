@@ -1,13 +1,15 @@
 baseURL = "http://site.example.com/"
 languageCode = "en-us"
 title = "site.example.com"
-theme = ["github.com/pimsmath/gohugo-theme-syzygy-callysto"]
+themesDir = "../.."
+theme = "gohugo-theme-syzygy-callysto"
 
 [params]
   # Link to the login page of the hub
   hub_url = "/"
   signin_text = "Sign in with your account"
-  logo = "/images/logo-13.png"
+  logo = "/images/logo-13.svg"
+  #custom_css = ["css/foo.css"]
 
 [menu]
   [[menu.main]]
