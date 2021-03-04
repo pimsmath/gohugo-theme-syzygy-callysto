@@ -12,7 +12,7 @@
             {{ if not (eq .URL "/") }}
             <li class="nav-item">
               <a class="nav-link js-scroll-trigger" href="{{ .URL | relLangURL }}">
-                {{- .Pre -}}{{ .Name | safeHTML }}{{- .Post -}}
+                  {{- .Pre -}}<span>{{ .Name | safeHTML }}</span>{{- .Post -}}
               </a>
             </li>
             {{ end }}
