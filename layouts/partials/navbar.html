@@ -11,8 +11,12 @@
             {{ range site.Menus.main }}
             {{ if not (eq .URL "/") }}
             <li class="nav-item">
+              {{ if in .URL "https://" }}
+              <a class="nav-link js-scroll-trigger" href="{{ .URL }}" target="_blank">
+              {{ else }}
               <a class="nav-link js-scroll-trigger" href="{{ .URL | relLangURL }}">
-                  {{- .Pre -}}<span>{{ .Name | safeHTML }}</span>{{- .Post -}}
+              {{ end }}
+                {{- .Pre -}}<span>{{ .Name | safeHTML }}</span>{{- .Post -}}
               </a>
             </li>
             {{ end }}
